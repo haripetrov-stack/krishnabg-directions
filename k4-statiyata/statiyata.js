@@ -309,7 +309,7 @@
         var t = document.getElementById(a.getAttribute('href').slice(1));
         if (t && t.hasAttribute('data-row')) {
           activate(t);
-          if ('onscrollend' in window && Math.abs(t.getBoundingClientRect().top - 84) > 4) jumping = true;
+          if ('onscrollend' in window && Math.abs(t.getBoundingClientRect().top - (parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 88)) > 4) jumping = true;
         }
         if (det && !wide.matches && a.closest('.toc')) det.open = false;
       });

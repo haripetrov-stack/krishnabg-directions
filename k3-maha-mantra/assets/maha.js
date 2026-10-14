@@ -98,7 +98,7 @@
     ['Харе', 'Рама,', 'Харе', 'Рама,'],
     ['Рама', 'Рама,', 'Харе', 'Харе']
   ];
-  var bar = $('.bar'), barWords = $$('.bw', bar), ring = $('.orb__ring'), plum = $('#plum');
+  var bar = $('.bar'), barWords = $$('.bw', bar), ring = $('.orb__ring');
   var peakPhoto = $('.peak__photo'), peakText = $('.peak__text'), peakRim = $('.peak__rim'),
       peakCircle = $('.peak__rim circle'), peakPlate = $('.peak__plate'), peakCap = $('.peak__cap');
   var closeEl = $('#close'), stanza = $$('.stanza__l');
@@ -148,7 +148,6 @@
     });
     moves = $$('[data-move]').map(function (el) { var b = box(el); b.i = +el.getAttribute('data-move') - 1; return b; });
     geo.close = closeEl ? box(closeEl) : null;
-    geo.plum = plum ? box(plum) : null;
     var stage = $('.peak__stage');
     if (stage) {
       var r = stage.getBoundingClientRect();
@@ -169,7 +168,6 @@
   function frame() {
     var y = scrollY, i, o, q;
     if (ring && !reduce) ring.style.transform = 'rotate(' + (y * 0.06).toFixed(2) + 'deg)';
-    if (geo.plum) bar.classList.toggle('on-plum', geo.plum.top - y <= 28 && geo.plum.top + geo.plum.h - y >= 28);
     if (reduce) {
       setBarLine(0);
       return;

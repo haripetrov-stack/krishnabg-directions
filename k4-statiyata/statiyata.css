@@ -51,7 +51,7 @@
   --hl:#e3edfd;        /* current row */
   --hl-strong:#c4d9fa; /* arrival pulse */
   --saffron:#f2a31a;   /* only in the mark */
-  --bar-h:60px;
+  --bar-h:76px;
   --ease:cubic-bezier(.23,1,.32,1);
   --gap:clamp(16px,2.6vw,40px);
 }
@@ -59,7 +59,7 @@
 /* ------------------------------------------------------------- base -- */
 /* small reset so the reading page works without scrollcraft.css */
 *,*::before,*::after{box-sizing:border-box}
-html{scroll-padding-top:84px;scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+html{scroll-padding-top:calc(var(--bar-h) + 12px);scroll-behavior:smooth;-webkit-text-size-adjust:100%}
 /* lang="bg" stays for language and search engines. Both fonts answer it with cursive-like
    upright forms (т as m, и as u, see lab/fonttest.png); the standard forms read better at 17 px.
    Delete this rule to get the fonts' Bulgarian forms back. !important because every `font:`
@@ -81,7 +81,7 @@ a[aria-disabled="true"]{cursor:default}
 img{height:auto}
 .sr{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap}
 .wrap{max-width:1320px;margin-inline:auto;padding-inline:var(--gap)}
-[id]{scroll-margin-top:84px}
+[id]{scroll-margin-top:calc(var(--bar-h) + 12px)}
 .skip{position:absolute;left:12px;top:-60px;z-index:100;background:#fff;color:var(--ink);
   font:600 .9375rem/1 var(--ui);padding:.9rem 1.1rem;border:2px solid var(--ink);border-radius:4px;text-decoration:none}
 .skip:focus{top:8px}
@@ -89,9 +89,12 @@ img{height:auto}
 /* ------------------------------------------------------------ header -- */
 .bar{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--frame)}
 .bar__in{display:flex;align-items:center;gap:1.25rem;min-height:var(--bar-h);max-width:1320px;margin-inline:auto;padding-inline:var(--gap)}
-.brand{display:flex;align-items:center;gap:.7rem;color:var(--ink);text-decoration:none;font:600 1.0625rem/1.15 var(--serif);min-height:44px;flex:0 1 auto}
-.brand:hover{color:var(--ink)}
-.mark{flex:none;width:30px;height:30px}
+/* Official ISKCON logo: light ground, never on a photo, never in a frame. The margin around it is
+   at least the height of the letters ISKCON (about 6 px at this size); the name is plain text beside it. */
+.brandlink{display:flex;align-items:center;gap:1rem;color:var(--ink);text-decoration:none;flex:0 1 auto}
+.brandlink:hover{color:var(--ink)}
+.logo{display:block;flex:none;width:60px;height:auto;margin:10px 0}
+.brand{font:600 1.0625rem/1.15 var(--serif)}
 .menu{margin-inline-start:auto}
 .menu ul{display:flex;gap:.15rem;margin:0;padding:0;list-style:none}
 .menu a{display:flex;align-items:center;min-height:44px;padding:0 .8rem;color:var(--ink);font:400 .96875rem/1 var(--ui);text-decoration:none;border-radius:4px}
@@ -128,7 +131,7 @@ img{height:auto}
   .menu a{padding:0 .5rem;border-bottom:1px solid var(--line);border-radius:0;font-size:1.0625rem;min-height:48px}
   .btn-ico{display:inline-flex}
   .bar__in{gap:.6rem}
-  .brand{margin-inline-end:auto}
+  .brandlink{margin-inline-end:auto}
   .search{flex:none;order:2}
   .search input{display:none}
   .search .ico{display:none}
@@ -139,6 +142,14 @@ img{height:auto}
   .btn-menu{order:3}
 }
 @media (min-width:1101px){ .btn-search{display:none} }
+
+@media (max-width:640px){
+  :root{--bar-h:64px}
+  .logo{width:56px;margin:6px 0}
+  .brandlink{gap:.65rem}
+  .brand{font-size:.9375rem}
+  .btn-menu span{display:none}
+}
 
 /* ------------------------------------------------------------ layout -- */
 .layout{display:grid;gap:0 var(--gap);padding-block:1.5rem 3rem;
@@ -271,10 +282,20 @@ strong{font-weight:600}
 .tbl caption{padding:.2rem 0 .55rem;text-align:left;font:600 1rem/1.3 var(--ui);color:var(--ink-2)}
 .tbl th,.tbl td{padding:.7rem .9rem;text-align:left;vertical-align:top;border-top:1px solid var(--line)}
 .tbl thead th{background:var(--soft);border-top:0;border-bottom:1px solid var(--frame);font-weight:600}
-.tbl tbody th{width:30%;min-width:7.5rem;font-weight:600}
+.tbl tbody th{width:36%;min-width:7.5rem;font-weight:600;overflow-wrap:normal}
 .tbl td p{margin:0 0 .2rem;font:inherit}
 .tbl td p:last-child{margin:0}
 .tbl .k{color:var(--ink-3)}
+.tbl th,.tbl td{overflow-wrap:anywhere}
+/* three-column tables read as short cards on a phone, so nothing sticks out of the frame */
+@media (max-width:640px){
+  .tbl--stack thead{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+  .tbl--stack,.tbl--stack tbody,.tbl--stack tr,.tbl--stack th,.tbl--stack td{display:block;width:auto}
+  .tbl--stack tr{padding:.35rem 0;border-top:1px solid var(--line)}
+  .tbl--stack tr:first-child{border-top:0}
+  .tbl--stack th,.tbl--stack td{border:0;padding:.2rem .9rem}
+  .tbl--stack tbody th{width:auto}
+}
 
 .notes{margin:0 0 1.4rem;padding-left:1.7em;font:400 1rem/1.45 var(--ui)}
 .notes li{margin:0;padding:.2rem 0}
@@ -284,11 +305,12 @@ strong{font-weight:600}
 .dl{margin:0 0 1.2rem}
 
 /* ------------------------------------------------------------- footer -- */
-.foot{border-top:1px solid var(--frame);background:var(--soft);padding-block:2rem 5.5rem;font:400 .9375rem/1.5 var(--ui);color:var(--ink-2)}
+.foot{border-top:1px solid var(--frame);background:#fff;padding-block:2rem 5.5rem;font:400 .9375rem/1.5 var(--ui);color:var(--ink-2)}
 .foot__in{display:grid;gap:1.6rem 2.5rem;grid-template-columns:minmax(0,1fr)}
 @media (min-width:880px){ .foot__in{grid-template-columns:minmax(0,1.1fr) minmax(0,1fr)} }
 .foot p{margin:0 0 .6rem;font:inherit}
-.foot .fb{display:flex;align-items:center;gap:.7rem;margin-bottom:.8rem;color:var(--ink);font:600 1rem/1.2 var(--serif)}
+.foot .fb{display:flex;align-items:center;gap:1rem;margin-bottom:.8rem;color:var(--ink);font:600 1rem/1.2 var(--serif)}
+.logo--foot{width:72px;margin:12px 0}
 .foot h2{margin:0 0 .5rem;padding:0;border:0;font:600 1rem/1.3 var(--ui);color:var(--ink)}
 .foot ul{list-style:none;margin:0;padding:0;font-size:.875rem}
 .foot li{margin:0 0 .5rem}

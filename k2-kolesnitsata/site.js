@@ -51,9 +51,9 @@
     zl = stops[0].offsetLeft; zw = stops[0].offsetWidth;
     stops.forEach(function (s) { s.classList.remove('near'); });
     x0 = chariot.offsetLeft; y0 = chariot.offsetTop; chei = chariot.offsetHeight; cwid = chariot.offsetWidth;
-    sEnd = mobile ? 0.48 : 0.56;
+    sEnd = mobile ? 0.6 : 0.72;
     var yb = 0.80 * H + (mobile ? 0.03 : 0.04) * H;
-    dx = (mobile ? -0.06 * W : 0.03 * W) - x0;
+    dx = (mobile ? -0.05 * W : 0.02 * W) - x0;
     dy = (yb - chei * sEnd) - y0;
     period = ropew.offsetHeight * 28 / 24;
     roadDy = -0.10 * H;
@@ -103,7 +103,7 @@
     bunting.style.opacity = u > 0.01 ? '1' : '0';
     bunting.style.transform = 'translate3d(' + px(-mod(D * 0.55, 480)) + ',0,0) scale(1,' + u.toFixed(3) + ')';
 
-    var bo = 1 - seg(e, 0.35, 0.85);
+    var bo = 1 - seg(e, 0.0, 0.22);
     banner.style.opacity = bo.toFixed(3);
     banner.style.visibility = bo < 0.01 ? 'hidden' : 'visible';
     banner.style.transform = 'translate3d(0,' + px(-e * 0.10 * H) + ',0) scale(' + (1 - e * 0.06).toFixed(4) + ')';

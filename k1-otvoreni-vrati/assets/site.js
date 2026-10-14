@@ -23,7 +23,7 @@
 
   DATA.forEach(function (e) { e._t = words(e.h); e._x = words(e.x); e._k = words(e.k || ''); });
 
-  // A short stem has to match a whole word (plus an ending of up to two letters), so "бог" does not match "богослужение".
+  // A short stem has to match a whole word (plus an ending of up to two letters), so "бог" does not match a long word such as "богове".
   function has(list, st) {
     for (var i = 0; i < list.length; i++) {
       var w = list[i];
@@ -52,7 +52,7 @@
     });
     scored.sort(function (a, b) { return b.s - a.s || a.n - b.n; });
     var top = scored.length ? scored[0].s : 0;
-    var hits = scored.filter(function (r) { return r.s >= top * 0.3; }).map(function (r) { return r.e; });
+    var hits = scored.filter(function (r) { return r.s >= top * 0.42; }).map(function (r) { return r.e; });
     return { valid: true, hits: hits, stems: stems };
   }
 

@@ -36,7 +36,7 @@
   --link: #0b4f74;
   --font-sans: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --font-serif: "IBM Plex Serif", Georgia, "Times New Roman", serif;
-  --bar-h: 3.5rem;
+  --bar-h: 5rem;
   --gutter: max(1.25rem, 5vw);
 
   /* engine tokens (scrollcraft.css reads these) */
@@ -81,15 +81,16 @@ a[aria-disabled="true"] { cursor: default; }
 
 /* ------------------------------------------------------------------ header */
 .bar {
-  position: fixed; inset: 0 0 auto 0; z-index: 60; height: var(--bar-h);
+  position: fixed; inset: 0 0 auto 0; z-index: 60; height: var(--bar-h); padding-block: 0.6rem;
   display: flex; align-items: center; justify-content: space-between; gap: 1rem;
   padding-inline: var(--gutter);
   background: var(--card); border-bottom: 1px solid var(--rule);
 }
-.brand { display: flex; align-items: center; gap: 0.7rem; color: var(--ink); text-decoration: none; min-height: 44px; }
+.brand { display: flex; align-items: center; gap: 1rem; color: var(--ink); text-decoration: none; min-height: 44px; }
 .brand:hover { text-decoration: none; }
-.brand__t { font-family: var(--font-serif); font-weight: 500; font-size: 1.0625rem; line-height: 1.15; max-width: 12rem; }
-.mark { flex: none; }
+/* the official logo: own file, own colour, on white, no frame; its free field is the bar's padding (at least the height of the letters) */
+.brand__logo { display: block; width: 66px; height: auto; flex: none; }
+.brand__t { font-family: var(--font-serif); font-weight: 500; font-size: 1.125rem; line-height: 1.15; max-width: 13rem; }
 
 .nav { display: flex; align-items: center; }
 .nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 0.25rem; }
@@ -105,6 +106,8 @@ a[aria-disabled="true"] { cursor: default; }
 .nav__btn { display: none; }
 
 @media (max-width: 899px) {
+  :root { --bar-h: 4.25rem; }
+  .brand__logo { width: 58px; }
   .brand__t { max-width: 9.5rem; font-size: 1rem; }
   .nav__btn {
     display: inline-flex; align-items: center; justify-content: center; min-height: 44px; min-width: 44px;
@@ -226,3 +229,47 @@ a[aria-disabled="true"] { cursor: default; }
 .points strong { font-weight: 600; }
 .next { display: flex; flex-wrap: wrap; gap: 0.75rem 1.75rem; margin-top: 2.25rem; }
 .next a { display: inline-flex; align-items: center; min-height: 44px; font-weight: 600; }
+
+.foot__brand { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+.foot__logo { display: block; width: 76px; height: auto; flex: none; }
+.foot__brand .foot__id { margin: 0; }
+
+.hours { margin: 1.25rem 0; }
+.hours div { display: grid; gap: 0.1rem; padding: 0.7rem 0; border-top: 1px solid var(--rule-soft); }
+.hours div:last-child { border-bottom: 1px solid var(--rule-soft); }
+.hours dt { font-weight: 600; }
+.hours dd { margin: 0; color: var(--ink-2); }
+@media (min-width: 700px) { .hours div { grid-template-columns: 15rem 1fr; gap: 1.5rem; } }
+
+.times { list-style: none; margin: 0.6rem 0 0; padding: 0; }
+.times li { display: grid; grid-template-columns: 5.6rem 1fr; gap: 0.8rem; padding: 0.4rem 0; border-top: 1px solid var(--rule-soft); }
+.times li:last-child { border-bottom: 1px solid var(--rule-soft); }
+.times b { font-weight: 600; font-variant-numeric: tabular-nums; }
+.prog { margin: 1.5rem 0 0; }
+.prog h3 { margin-bottom: 0.15rem; }
+.prog .when { margin: 0 0 0.5rem; color: var(--ink-2); }
+
+.tablewrap { margin: 1.25rem 0; }
+.editions { border-collapse: collapse; width: 100%; font-variant-numeric: tabular-nums; }
+.editions th, .editions td { text-align: left; padding: 0.6rem 0.7rem 0.6rem 0; border-top: 1px solid var(--rule-soft); vertical-align: top; }
+.editions thead th { font-size: 0.9375rem; color: var(--ink-2); font-weight: 600; border-top: 0; border-bottom: 1px solid var(--rule); }
+.editions tbody tr:last-child td { border-bottom: 1px solid var(--rule-soft); }
+/* on a phone each edition becomes its own short block: no sideways scroll */
+@media (max-width: 699px) {
+  .editions, .editions tbody, .editions tr, .editions td { display: block; }
+  .editions thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  .editions tr { border-top: 1px solid var(--rule-soft); padding: 0.7rem 0; }
+  .editions tbody tr:last-child { border-bottom: 1px solid var(--rule-soft); }
+  .editions td, .editions tbody tr:last-child td { border: 0; padding: 0.08rem 0; }
+  .editions td::before { content: attr(data-label) ": "; font-weight: 600; color: var(--ink-2); }
+}
+
+.duo { display: grid; gap: 1.5rem; margin: 2rem 0; }
+.duo .ph { margin: 0; }
+@media (min-width: 700px) { .duo { grid-template-columns: 1fr 1fr; } }
+.plain { margin: 0.75rem 0 0; padding-left: 1.25rem; max-width: 62ch; }
+.plain li { padding: 0.15rem 0; }
+.plainlist { list-style: none; margin: 0.6rem 0 0; padding: 0; max-width: 62ch; }
+.plainlist li { padding: 0.3rem 0; border-top: 1px solid var(--rule-soft); }
+.plainlist li:last-child { border-bottom: 1px solid var(--rule-soft); }
+.note { font-size: 0.9375rem; color: var(--ink-2); }

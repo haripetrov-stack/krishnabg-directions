@@ -18,7 +18,7 @@
 /* ----------------------------------------------------------------- tokens -- */
 :root{
   color-scheme:light;
-  --canvas:#FBF7F2; --ink:#1D1420; --ink-soft:#5A4C5C; --kumkum:#C8321E; --kumkum-ink:#FBF7F2;
+  --canvas:#FBF7F2; --ink:#1D1420; --ink-soft:#5A4C5C; --kumkum:#B74233; --kumkum-ink:#FBF7F2;
   --off:#857A87;              /* a word not yet sung, on the light ground (3.8 : 1) */
   --hair:#D9CED2;
   --plum:#2A1030; --ivory:#F7EDE4; --ivory-soft:#CDBBC8; --glow:#FF7A5C;
@@ -26,7 +26,7 @@
   --fd:"Geologica","Onest",system-ui,sans-serif;
   --ft:"Onest",system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
   --gutter:clamp(1.25rem,5vw,4.5rem);
-  --bar-h:3.5rem;
+  --bar-h:4.5rem;
   --ease:cubic-bezier(.23,1,.32,1);
   /* the engine's tokens, pointed at ours */
   --sc-canvas:var(--canvas); --sc-surface:var(--canvas); --sc-ink:var(--ink); --sc-ink-soft:var(--ink-soft);
@@ -53,7 +53,7 @@ button{font:inherit;color:inherit}
 a{color:inherit;text-decoration-thickness:1px;text-underline-offset:.22em}
 a:hover{color:var(--kumkum)}
 :focus-visible{outline:3px solid var(--kumkum);outline-offset:3px;border-radius:6px}
-.plum :focus-visible,.menu :focus-visible,.bar.on-plum :focus-visible{outline-color:var(--glow)}
+.plum :focus-visible,.menu :focus-visible{outline-color:var(--glow)}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .skip{position:fixed;left:1rem;top:-4rem;z-index:100;background:var(--ink);color:var(--canvas);padding:.75rem 1.1rem;border-radius:999px;font-weight:600;text-decoration:none;transition:top .15s var(--ease)}
 .skip:focus{top:.75rem}
@@ -74,31 +74,32 @@ a:hover{color:var(--kumkum)}
    Without script the defaults leave every word sung. */
 .lw{color:color-mix(in oklab,color-mix(in oklab,var(--w-cur) calc(var(--cur,0) * 100%),var(--w-on)) calc(var(--lit,1) * 100%),var(--w-off))}
 :root{--w-off:var(--off);--w-on:var(--ink);--w-cur:var(--kumkum)}
-.plum,.bar.on-plum,.menu{--w-off:var(--off-plum);--w-on:var(--ivory);--w-cur:var(--glow)}
+.plum,.menu{--w-off:var(--off-plum);--w-on:var(--ivory);--w-cur:var(--glow)}
 
 /* ---------------------------------------------------------------------- bar -- */
-.bar{position:fixed;inset:0 0 auto 0;z-index:60;height:var(--bar-h);display:flex;align-items:center;gap:.5rem;
-  padding-inline:calc(var(--gutter) - .5rem) var(--gutter);background:var(--canvas);color:var(--ink);
-  border-bottom:1px solid var(--hair);transition:background-color .2s var(--ease),color .2s var(--ease),border-color .2s var(--ease)}
-.bar.on-plum{background:var(--plum);color:var(--ivory);border-color:rgba(247,237,228,.22)}
-.mark{display:grid;place-items:center;width:2.75rem;height:2.75rem;flex:none;color:inherit;border-radius:50%}
-.mark svg{width:1.75rem;height:1.75rem}
-.bar__line{margin:0 auto 0 .25rem;display:flex;gap:.34em;white-space:nowrap;overflow:hidden;
-  font:700 clamp(.75rem,3.4vw,.9375rem)/1.2 var(--fd);letter-spacing:-.012em;transition:opacity .16s var(--ease)}
-.bar__line.is-swap{opacity:0}
-.bar__menu{display:inline-flex;align-items:center;gap:.55rem;min-height:2.75rem;padding:0 1.1rem;margin-left:auto;
+/* Always light: the official logo never sits on plum. The clear space round it is at least the height
+   of the letters ISKCON (about 11 % of the logo height), and the name is separate text beside it. */
+.bar{position:fixed;inset:0 0 auto 0;z-index:60;height:var(--bar-h);display:flex;align-items:center;gap:.875rem;
+  padding-inline:var(--gutter);background:var(--canvas);color:var(--ink);border-bottom:1px solid var(--hair)}
+.logo{display:block;flex:none;width:3.75rem;line-height:0}
+.logo img{width:100%;height:auto}
+.brandtxt{min-width:0;display:grid;gap:.15rem;margin-right:auto}
+.brandtxt__n{margin:0;font:700 .9375rem/1.2 var(--fd);letter-spacing:-.012em;font-feature-settings:"locl" 0}
+.bar__line{margin:0;display:flex;gap:.34em;white-space:nowrap;overflow:hidden;
+  font:700 clamp(.75rem,3.2vw,.875rem)/1.2 var(--fd);letter-spacing:-.012em}
+.bar__menu{display:inline-flex;align-items:center;gap:.55rem;min-height:2.75rem;padding:0 1.1rem;flex:none;
   background:transparent;border:1.5px solid currentColor;border-radius:999px;font:600 .9375rem/1 var(--ft);cursor:pointer;color:inherit}
 .bar__menu:hover{background:var(--ink);color:var(--canvas);border-color:var(--ink)}
-.bar.on-plum .bar__menu:hover{background:var(--ivory);color:var(--plum);border-color:var(--ivory)}
 .bar__menu svg{width:1.05rem;height:1.05rem}
-@media (max-width:23rem){.bar__line{display:none}}
+@media (max-width:40rem){.logo{width:3.5rem}.bar{gap:.625rem}.brandtxt__n{font-size:.78rem}.bar__line{font-size:clamp(.6875rem,3vw,.8125rem)}.bar__menu{padding:0 .85rem;gap:.4rem}}
+@media (max-width:23rem){.bar__line{display:none}.brandtxt__n{font-size:.72rem}}
 
 /* --------------------------------------------------------------------- menu -- */
 .menu{position:fixed;inset:0;z-index:90;background:var(--plum);color:var(--ivory);display:flex;flex-direction:column;
   padding:calc(var(--bar-h) + 1rem) var(--gutter) 2rem;overflow-y:auto;overscroll-behavior:contain;
   animation:menu-in .22s var(--ease)}
 @keyframes menu-in{from{opacity:0}to{opacity:1}}
-.menu__close{position:absolute;top:.375rem;right:var(--gutter);display:inline-flex;align-items:center;gap:.55rem;min-height:2.75rem;padding:0 1.1rem;
+.menu__close{position:absolute;top:.9375rem;right:var(--gutter);display:inline-flex;align-items:center;gap:.55rem;min-height:2.75rem;padding:0 1.1rem;
   background:transparent;border:1.5px solid var(--ivory);border-radius:999px;color:var(--ivory);font:600 .9375rem/1 var(--ft);cursor:pointer}
 .menu__close:hover{background:var(--ivory);color:var(--plum)}
 .menu__close svg{width:1.05rem;height:1.05rem}
@@ -133,7 +134,7 @@ html.menu-open{overflow:hidden}
   transition:transform .14s var(--ease),background-color .14s var(--ease)}
 .cta:hover{background:var(--ink);color:var(--canvas)}
 .cta:active{transform:translateY(1px)}
-.orb{position:relative;justify-self:center;width:min(100%,calc(100vh - var(--bar-h) - 3.5rem),42rem);width:min(100%,calc(100svh - var(--bar-h) - 3.5rem),42rem);aspect-ratio:1}
+.orb{position:relative;width:min(100%,calc(100vh - var(--bar-h) - 5.5rem),42rem);width:min(100%,calc(100svh - var(--bar-h) - 5.5rem),42rem);aspect-ratio:1}
 .orb__ring{position:absolute;inset:0;width:100%;height:100%;will-change:transform}
 .orb__ring text{font:700 29px var(--fd);fill:var(--ink);letter-spacing:.01em}
 .orb__ring .dot{fill:var(--kumkum)}
@@ -210,14 +211,14 @@ html.menu-open{overflow:hidden}
 .m3__b{grid-column:8 / span 5}
 .m3__cal{grid-column:1 / span 5}
 .m3__lis{grid-column:7 / span 6}
-.m3__food{grid-column:8 / span 5;grid-row:3}
-.m3__foodimg{grid-column:1 / span 6;grid-row:3}
+.m3__food{grid-column:8 / span 5}
+.m3__foodimg{grid-column:1 / span 6}
 .m3__more{grid-column:1 / -1}
 /* movement 4 */
 .m4__a{grid-column:1 / span 6}
 .m4__b{grid-column:8 / span 5}
-.m4__c{grid-column:1 / span 5}
-.m4__d{grid-column:7 / span 6}
+.m4__c{grid-column:1 / span 6}
+.m4__d{grid-column:8 / span 5}
 .years{list-style:none;margin:0;padding:0}
 .years li{display:grid;grid-template-columns:minmax(7.5rem,10.5rem) 1fr;column-gap:1.25rem;border-top:1px solid var(--hair);padding:1rem 0 1.1rem}
 .years li:last-child{border-bottom:1px solid var(--hair)}
@@ -281,7 +282,8 @@ html:not(.js) .peak__photo{clip-path:none}
 /* ---------------------------------------------------------------- za-nas page -- */
 .page{padding:calc(var(--bar-h) + clamp(2rem,6vw,5rem)) 0 clamp(3rem,7vw,6rem)}
 .page__top{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,16rem);gap:clamp(1.5rem,4vw,4rem);align-items:center;margin-bottom:clamp(2rem,5vw,4rem)}
-.page__top .small-orb{width:100%;max-width:16rem;aspect-ratio:1;position:relative;justify-self:end}
+.page__top .small-orb{width:100%;max-width:16rem;justify-self:end}
+.page__top .small-orb .orb{width:100%}
 .page h1{margin:0;font:800 clamp(2.3rem,1.5rem + 4.2vw,4.8rem)/1.03 var(--fd);letter-spacing:-.035em;text-wrap:balance}
 .page__eyebrow{margin:0 0 1rem;color:var(--ink-soft)}
 .read{max-width:42rem;margin-inline:auto}
@@ -315,7 +317,23 @@ html:not(.js) .peak__photo{clip-path:none}
 @media (max-width:40rem){.rows.two>li:nth-last-child(2){border-bottom:0}}
 
 /* The font shorthand above resets font-feature-settings, so the locl switch is restated for the display faces. */
-.h2,.h3,.line,.hero h1,.page h1,.stanza,.recap,.bar__line,.menu a,.menu__close,.meaning__t,.years b,.cities li,.read li b,.foot h2,.lede,.quote,.cta,.bar__menu{font-feature-settings:"locl" 0}
+.h2,.h3,.line,.hero h1,.page h1,.stanza,.recap,.bar__line,.menu a,.menu__close,.meaning__t,.read li b,.foot h2,.lede,.quote,.cta,.bar__menu{font-feature-settings:"locl" 0}
+
+
+/* round 2 additions */
+.orbfig{margin:0;display:grid;justify-items:center;gap:.75rem;min-width:0}
+.orbfig figcaption{font-size:.9375rem;line-height:1.4;color:var(--ink-soft);text-align:center}
+.plum .facts dt,.plum .facts dd{border-color:rgba(247,237,228,.25)}
+.plum .facts dt{color:var(--ivory-soft)}
+.plum .facts dt:last-of-type,.plum .facts dd:last-of-type{border-bottom-color:rgba(247,237,228,.25)}
+.facts dd{overflow-wrap:break-word}
+.rows .fine{margin:.35rem 0 0;color:var(--ink-soft)}
+.plum .rows .fine{color:var(--ivory-soft)}
+.m4__a .facts{margin-top:1.5rem}
+.foot__brand{display:flex;align-items:center;gap:1rem;margin-bottom:1.75rem}
+.logo--foot{width:7rem;padding:.75rem}
+.foot__name{margin:0;font:700 1.0625rem/1.25 var(--fd);color:var(--ink);font-feature-settings:"locl" 0}
+@media (max-width:40rem){.logo--foot{width:6rem}}
 
 /* ------------------------------------------------------------- reduced motion -- */
 /* Static and whole: no pinned stages, no travel, every word sung. */

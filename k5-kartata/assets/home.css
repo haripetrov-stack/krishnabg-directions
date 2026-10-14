@@ -5,34 +5,28 @@
 .map { position: absolute; inset: 0; width: 100%; height: 100%; display: block; z-index: 0; max-width: none; }
 .defs { position: absolute; width: 0; height: 0; overflow: hidden; }
 
-#k-world, #k-eland, #k-eborder, #k-bfill, #k-bcoast, #k-bborder, #k-bonly, .route-line { vector-effect: non-scaling-stroke; }
+#k-bfill, #k-bcoast, #k-bborder, #k-bonly, #c-park, #c-water, #c-river, #c-rail, #c-min-ctr, #c-min-tmp, #c-sec, #c-main { vector-effect: non-scaling-stroke; }
 .land   { fill: #fff; stroke: var(--coast); stroke-width: 1; stroke-linejoin: round; fill-rule: evenodd; }
 .fill   { fill: #e6edf2; stroke: none; fill-rule: evenodd; }
 .coast  { fill: none; stroke: var(--coast); stroke-width: 1.2; stroke-linejoin: round; }
 .bonly  { fill: #fff; stroke: var(--coast); stroke-width: 1.8; stroke-linejoin: round; fill-rule: evenodd; }
 .border { fill: none; stroke: #6f8aa0; stroke-width: 1; stroke-dasharray: 5 4; }
-.grat   { fill: none; stroke: #fff; stroke-width: 1; }
-.route-case { fill: none; stroke: #fff; stroke-width: 7; stroke-linecap: round; stroke-linejoin: round; }
-.route-main { fill: none; stroke: var(--saffron); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+/* Sofia, drawn from OpenStreetMap data: soft ground, water, parks, then streets from quiet to busy */
+.c-park  { fill: #dfe9da; stroke: none; fill-rule: nonzero; }
+.c-water { fill: #cfdde7; stroke: none; fill-rule: nonzero; }
+.c-river { fill: none; stroke: #cfdde7; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.c-rail  { fill: none; stroke: #a9b9c5; stroke-width: 1; stroke-dasharray: 6 3; }
+.c-min-ctr, .c-min-tmp { fill: none; stroke: #c3d1da; stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; }
+.c-sec   { fill: none; stroke: #aebfcb; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
+.c-main  { fill: none; stroke: #8da4b4; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.ground { position: absolute; inset: 0; z-index: 0; background: #fff; opacity: 0; }
 
 /* overlays: real HTML laid on the map at real coordinates (positions written by map.js) */
 .ovl { position: absolute; inset: 0; z-index: 2; pointer-events: none; overflow: clip; }
 .pt { position: absolute; left: 0; top: 0; opacity: 0; will-change: transform, opacity; pointer-events: none; }
-.head { position: absolute; left: 0; top: 0; width: 0; height: 0; opacity: 0; will-change: transform; }
-.head::before {
-  content: ""; position: absolute; left: -7px; top: -7px; width: 14px; height: 14px; border-radius: 50%;
-  background: var(--saffron); border: 3px solid #fff; box-sizing: border-box; box-shadow: 0 0 0 1.5px var(--ink);
-}
 .halo { text-shadow: 0 0 2px var(--sea), 0 0 2px var(--sea), 0 0 5px var(--sea), 0 0 5px var(--sea); }
 .halo--w { text-shadow: 0 0 2px #fff, 0 0 2px #fff, 0 0 5px #fff, 0 0 5px #fff; }
 
-.ny__dot {
-  position: absolute; left: -9px; top: -9px; width: 18px; height: 18px; border-radius: 50%; box-sizing: border-box;
-  background: var(--saffron); border: 3px solid #fff; box-shadow: 0 0 0 1.5px var(--ink);
-}
-.ny__t { position: absolute; left: 14px; top: -66px; white-space: nowrap; line-height: 1.05; }
-.ny__t b { display: block; font: 600 15px/1.2 var(--font-sans); color: var(--ink); }
-.ny__t i { display: block; font: 500 clamp(1.7rem, 1.2rem + 1.4vw, 2.3rem)/1 var(--font-serif); font-style: normal; color: var(--saffron-ink); }
 
 .sea-lab {
   position: absolute; left: 0; top: 0; white-space: nowrap; font: 600 13px/1 var(--font-sans); letter-spacing: 0.22em;
@@ -42,9 +36,6 @@
 .sea-lab--i > span { font-style: italic; letter-spacing: 0.12em; text-transform: none; font-weight: 400; font-size: 17px; }
 .land-lab > span { color: #5a7487; }
 
-.yr > span {
-  position: absolute; left: -76px; top: 16px; font: 500 clamp(1.6rem, 1.2rem + 1.2vw, 2.1rem)/1 var(--font-serif); color: var(--saffron-ink);
-}
 
 /* a city on the map: a 44px target, a dot that lights under the scroll, a name */
 .city { display: block; width: 44px; height: 44px; margin: -22px 0 0 -22px; pointer-events: auto; text-decoration: none; color: var(--ink); --lit: 0; }
@@ -62,24 +53,32 @@
 .city.a-t .city__name { left: 50%; top: -14px; transform: translateX(-50%); }
 .city.a-b .city__name { left: 50%; top: auto; bottom: -14px; transform: translateX(-50%); }
 .city:hover .city__name, .city.hot .city__name { border-color: var(--ink); }
+div.city { pointer-events: none; }
 .city:focus-visible { outline-offset: -4px; border-radius: 50%; }
 
 /* photographs pinned at the place where they were taken */
-.pin { width: 0; height: 0; }
+.pin { width: 0; height: 0; margin: 0; }
+.pin--temple { --pw: 132px; }
+.pin { --lit: 1; }
 .pin__dot {
-  position: absolute; left: -7px; top: -7px; width: 14px; height: 14px; border-radius: 50%; box-sizing: border-box;
-  background: var(--saffron); border: 3px solid #fff; box-shadow: 0 0 0 1.5px var(--ink);
+  position: absolute; left: -9px; top: -9px; width: 18px; height: 18px; border-radius: 50%; box-sizing: border-box;
+  background: color-mix(in srgb, var(--saffron) calc(var(--lit) * 100%), #fff); border: 3px solid #fff; box-shadow: 0 0 0 2px var(--ink);
+  transform: scale(calc(1 + var(--lit) * 0.2));
 }
 .pin__box {
-  position: absolute; width: 168px; margin: 0; background: #fff; border: 1px solid var(--rule); padding: 5px;
+  position: absolute; width: var(--pw, 168px); margin: 0; background: #fff; border: 1px solid var(--rule); padding: 5px;
   box-shadow: 0 8px 16px -8px rgba(18, 32, 43, 0.5);
 }
 .pin__box img { display: block; width: 100%; height: auto; background: var(--sea); }
 .pin__box figcaption { font: 600 13px/1.25 var(--font-sans); padding: 5px 2px 1px; color: var(--ink); }
-.pin--n .pin__box { left: -84px; bottom: 16px; }
-.pin--s .pin__box { left: -84px; top: 16px; }
+.pin--n .pin__box { left: calc(var(--pw, 168px) / -2); bottom: 16px; }
+.pin--s .pin__box { left: calc(var(--pw, 168px) / -2); top: 16px; }
 .pin--e .pin__box { left: 16px; top: -64px; }
 .pin--w .pin__box { right: 16px; top: -64px; }
+
+/* credit for the city map, shown only while the city is on the map */
+.attr { position: absolute; right: 20px; bottom: 4px; z-index: 4; margin: 0; font: 400 12px/1.2 var(--font-sans); color: var(--ink-2); background: rgba(255, 255, 255, 0.9); padding: 2px 6px; opacity: 0; }
+.scale { bottom: 30px; }
 
 /* the scale bar tells the truth about the zoom: it is computed from the camera, not decoration */
 .scale {
@@ -141,11 +140,11 @@
   .lvl h1 { font-size: clamp(1.75rem, 1.2rem + 3vw, 2.2rem); }
   .lvl h2 { font-size: 1.4rem; }
   .scale { right: auto; left: 10px; bottom: auto; top: calc(var(--bar-h) + 8px); }
-  .ny__t { top: -58px; }
+  .attr { right: 10px; bottom: auto; top: calc(var(--bar-h) + 8px); }
   .city__name { font-size: 14px; padding: 2px 5px; }
-  .pin__box { width: 104px; padding: 3px; }
+  .pin { --pw: 100px; }
+  .pin__box { padding: 3px; }
   .pin__box figcaption { font-size: 12px; padding: 3px 1px 0; }
-  .pin--n .pin__box, .pin--s .pin__box { left: -52px; }
   .legend { display: grid; grid-template-columns: 1fr 1fr; column-gap: 0.8rem; }
   .legend li:first-child { grid-column: 1 / -1; }
   .legend a { grid-template-columns: 1fr; gap: 0; padding: 0.3rem 0.1rem; }
