@@ -49,6 +49,13 @@ h1{font:600 clamp(1.8rem,4vw,2.6rem)/1.15 Georgia,"Times New Roman",serif;margin
 .archive-toggle{background:transparent;color:var(--ink);border:1px solid var(--edge)}
 .notes{color:var(--soft);font-size:.92rem;max-width:70ch}
 .archive{margin:2.5rem auto 0;padding-top:1.5rem;border-top:1px solid var(--line)}
+.featured{margin:0 auto 2.5rem;padding-block:1.4rem;border-top:3px solid #1C2B57;border-bottom:1px solid var(--line)}
+.featured h2,.section-h{font:600 1.45rem/1.3 Georgia,serif;margin:0 0 .8rem}
+.section-h{margin-top:1rem;margin-bottom:1rem}
+.why{margin:0 0 1.2rem;padding-left:1.2rem;max-width:75ch}
+.why li{margin:.3rem 0}
+.featured .dir{border:2px solid #1C2B57}
+.featured .num{color:#1C2B57}
 .archive .board{margin-top:1rem}
 .archive .dir{background:transparent}
 footer{padding:2rem 0 5rem}
@@ -62,17 +69,27 @@ footer{padding:2rem 0 5rem}
 <a class="skip" href="#board">Към посоките</a>
 <header class="top wrap">
   <img src="thumbs/iskcon-logo.svg" alt="ИСКОН" width="72" height="67" style="display:block;margin:0 0 20px">
-  <h1>Осем посоки за krishnabg.com</h1>
-  <p class="lead">Прототипи на дизайна за официалния сайт на Обществото за Кришна съзнание в България. По предложението на Махендра Прабху всяка посока следва един официален сайт на ИСКОН: подредбата и характера му, с нашите текстове, снимки и факти. Всяка има начална страница и страницата „Какво е Кришна съзнание“.</p>
+  <h1>Посоки за krishnabg.com</h1>
+  <p class="lead">Прототипи на дизайна за официалния сайт на Обществото за Кришна съзнание в България. Най-отгоре е новата посока 9, направена по бележките на Ралица. Под нея са осемте посоки по официални сайтове на ИСКОН, а най-долу е архивът. Всяка посока има начална страница и страницата „Какво е Кришна съзнание“.</p>
   <ul class="facts">
-    <li><b>По официални сайтове на ИСКОН</b>Германия, Англия, Белгия, САЩ, световният сайт iskcon.org, Лондон, сайтът на книгите krishna.com и нашият iskconsofia.com.</li>
     <li><b>Спокойни</b>Нищо не се движи при превъртане. Страниците са бързи и без заявки към чужди сайтове.</li>
     <li><b>Само София и Бургас</b>Други центрове и „Храна за живота“ няма. Книгите са без магазин: поръчка по имейл или телефон.</li>
     <li><b>Снимки и лого</b>Снимките са от общността в България (iskconsofia.com). Логото е официалното лого на ИСКОН, без промяна.</li>
   </ul>
 </header>
 <main id="main">
-  <section class="board wrap" id="board" aria-label="Посоките"></section>
+  <section class="featured wrap" aria-labelledby="new-h">
+    <h2 id="new-h">Нова посока по бележките на Ралица (18.10.2026)</h2>
+    <ul class="why">
+      <li><b>За 10 секунди:</b> вековна духовна традиция на бхакти йога, регистрирано вероизповедание от 1991 г., част от ИСКОН от 1966 г., Ратха ятра в София от 1996 г.</li>
+      <li><b>Синьо, жълто и злато:</b> цветовете от традицията, спокойни, с много въздух.</li>
+      <li><b>Спокойни снимки:</b> олтарът в златна рамка, шествието, публиката и книгите; без танци и тълпи в първия екран.</li>
+      <li><b>Доверие:</b> правният статут, въпросите на хората и линията на учителите са на началната страница.</li>
+    </ul>
+    <div class="board" id="featured-board"></div>
+  </section>
+  <h2 class="wrap section-h">Осемте посоки по официални сайтове на ИСКОН (16.10.2026)</h2>
+  <section class="board wrap" id="board" aria-label="Осемте посоки"></section>
   <section class="save wrap" id="save" aria-labelledby="save-h">
     <h2 id="save-h">Вашият избор</h2>
     <p>Изберете първа, втора и трета посока и напишете бележка. После копирайте избора и го изпратете на Питамбара.</p>
@@ -96,6 +113,7 @@ footer{padding:2rem 0 5rem}
 <div class="choice" aria-label="Текущият избор"><div class="wrap"><strong>Моите три:</strong> <span id="slots"></span> <a href="#save">Бележка и копиране</a></div></div>
 <footer class="wrap"><p class="notes">Подготвено от Питамбара даса с помощта на изкуствен интелект (AI), за обсъждане от екипа. Прототипи за избор на посока; ще бъдат заменени.</p></footer>
 <script>
+const NEW = {n:"9",id:"m9-vekovna-traditsia",name:"Вековна традиция",line:"По бележките на Ралица: първият екран казва, че Кришна съзнание е вековна духовна традиция на бхакти йога и регистрирано вероизповедание; синьо, жълто и злато; датите, правният статут и въпросите на хората носят доверието."};
 const DIRS = [
  {n:"1",id:"m1-svetla-klasika",name:"Светла класика",model:"iskcon.de",modelName:"ИСКОН Германия и Австрия",line:"Светъл крем, класически шрифт и голяма снимка до заглавието; три карти: какво е Кришна съзнание, в какво вярваме, какво ще преживеете."},
  {n:"2",id:"m2-poseteteni",name:"Посетете ни",model:"krishnatemple.com",modelName:"Бхактиведанта Мейнър, Англия",line:"За посетителя: работното време на храма стои най-горе и най-долу, бутони „Как да стигнете“ и „Програмата“; теракота и крем."},
@@ -131,17 +149,18 @@ function card(d, base, withPick) {
     el("div", { class: "shots" }, shot(base, d, "desk", "Началната страница на компютър", 760, 475, "index.html"), shot(base, d, "phone", "Началната страница на телефон", 300, 650, "index.html"), shot(base, d, "zanas-desk", "„Какво е Кришна съзнание“ на компютър", 760, 475, "za-nas.html")),
     foot);
 }
+document.getElementById("featured-board").append(card(NEW, "", true));
 const board = document.getElementById("board");
 for (const d of DIRS) board.append(card(d, "", true));
 const archive = document.getElementById("archive-board");
 for (const d of OLD) archive.append(card(d, "arhiv/", false));
 const btn = document.getElementById("archive-btn");
 btn.addEventListener("click", () => { const open = archive.hidden; archive.hidden = !open; btn.setAttribute("aria-expanded", String(open)); btn.textContent = open ? "Скрий първите пет посоки" : "Покажи първите пет посоки"; });
-const byId = Object.fromEntries(DIRS.map(d => [d.id, d]));
+const byId = Object.fromEntries([NEW, ...DIRS].map(d => [d.id, d]));
 function setPick(id, r) { if (picks[r] === id) picks[r] = null; else { picks = picks.map(p => p === id ? null : p); picks[r] = id; } render(); }
-function text() { const lines = RANKS.map((r, i) => `${r}: ${picks[i] ? byId[picks[i]].n + ". " + byId[picks[i]].name : "(няма)"}`); const n = document.getElementById("note").value.trim(); return "krishnabg.com, моят избор (осемте посоки, 16.10.2026)\n" + lines.join("\n") + (n ? "\nБележка: " + n : ""); }
+function text() { const lines = RANKS.map((r, i) => `${r}: ${picks[i] ? byId[picks[i]].n + ". " + byId[picks[i]].name : "(няма)"}`); const n = document.getElementById("note").value.trim(); return "krishnabg.com, моят избор (18.10.2026)\n" + lines.join("\n") + (n ? "\nБележка: " + n : ""); }
 function render() {
-  document.querySelectorAll("#board .pick button").forEach(b => b.setAttribute("aria-pressed", String(picks[+b.dataset.rank] === b.dataset.id)));
+  document.querySelectorAll("#board .pick button, #featured-board .pick button").forEach(b => b.setAttribute("aria-pressed", String(picks[+b.dataset.rank] === b.dataset.id)));
   document.getElementById("slots").textContent = RANKS.map((r, i) => `${r}: ${picks[i] ? byId[picks[i]].n : "няма"}`).join("  ");
   document.getElementById("out").textContent = text();
 }
